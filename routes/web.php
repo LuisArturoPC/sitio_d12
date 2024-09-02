@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+route::get('/contacto', function(){
+    return view('formulario-contacto');
+});
+
+route::post('/contacto-recibe', function(HttpRequest $request){
+    dd($request->all(), $request->nombre);
 });

@@ -7,26 +7,38 @@ use Illuminate\Http\Request;
 
 class ContactoController extends Controller
 {
-   public function formulario(){
-    return view('formulario-contacto');
-}
-function newContact(Request $request){
-   // dd($request->all(), $request->nombre);
-    $request->validate([
+    public function formulario($tipo_persona = null)
+    {
 
-        'nombre' => 'required|min:3|max:255', 
-        'correo' => 'required|email', 
-        'mensaje'=> ['required, min:10']
-    ]);
-    $contacto = new Contacto();
-    $contacto ->nombre = $request->nombre;
-    $contacto->correo = $request->correo;
-    $contacto->mensaje = $request->mensaje;
-    $contacto->save();
+        return view('formulario-contacto', compact('tipo_persona'));
 
-    return redirect('/contacto');
+        // return view('formulario-contacto', ['tipo_persona' => $tipo_persona]);
+    }
 
+    public function newContact(Request $request)
+    {
+        // dd($request->all(), $request->nombre);
+        $request->validate([
+            'nombre' => 'required|min:3|max:255',
+            'correo' => 'required|email',
+            'mensaje' => ['required', 'min:10']
+        ]);
 
+        $contacto = new Contacto();
+        $contacto->nombre = $request->nombre;
+        $contacto->correo = $request->correo;
+        $contacto->mensaje = $request->mensaje;
+        $contacto->save();
 
-}
+        return redirect('/contacto');
+    }
+
+    public function lista ()
+    {
+        $mensajes = Contacto::all();
+        return view('lista', compact('mensajes'));
+        //return view('lista', ['mensajes' => $mensajes]);
+       // return view('lista', ['mensajes' => Contacto::all()]);
+
+    }
 }

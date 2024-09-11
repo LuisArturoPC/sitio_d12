@@ -1,26 +1,16 @@
 <?php
 
 use App\Http\Controllers\ContactoController;
-use App\Models\Contacto;
-use App\Models\contactos;
-use Illuminate\Http\Client\Request;
-use Illuminate\Http\Request as HttpRequest;
+use App\Http\Controllers\NoticiaController;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', function () {
+    return view('welcome');
+});
 
-route::get('/contacto', [ContactoController::class,'formulario']);
-route::post('/contacto-recibe', [ContactoController::class, 'newContacto']);
+Route::get('/contacto/{tipo_persona?}', [ContactoController::class, 'formulario']);
+Route::post('/contacto-recibe', [ContactoController::class, 'newContact']);
 
-
-    return redirect('/contacto');
-
+Route::get('lista', [ContactoController::class, 'lista']);
+Route::resource('noticias', NoticiaController::class);

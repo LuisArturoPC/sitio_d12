@@ -21,14 +21,18 @@ class NoticiaController extends Controller
      */
     public function create()
     {
-        return view('noticias/create-noticia');
+        return view('noticias.create-noticia');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-       
+        // $request->validate([]);
         Noticia::create($request->all());
-        return redirect()->route('noticias.index');
+
+        return redirect()->route('noticia.index');
     }
 
     /**
@@ -52,11 +56,9 @@ class NoticiaController extends Controller
      */
     public function update(Request $request, Noticia $noticia)
     {
-      
+        $noticia->update($request->all());
 
-       $noticia->update($request->all());
-
-       return redirect()->route('noticia.show', $noticia);
+        return redirect()->route('noticia.show', $noticia);
     }
 
     /**
@@ -67,5 +69,4 @@ class NoticiaController extends Controller
         $noticia->delete();
         return redirect()->route('noticia.index');
     }
-
 }
